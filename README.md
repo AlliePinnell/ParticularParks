@@ -3,3 +3,6 @@
 ##NPM Commands
 
 npm i
+
+##Links
+http://localhost:4000/api/v1/parks
