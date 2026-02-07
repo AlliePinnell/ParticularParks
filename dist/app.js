@@ -10,7 +10,7 @@ const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const mongoose_1 = __importDefault(require("mongoose")); // mongodb access lib
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 // controllers
-const parks_1 = __importDefault(require("./controllers/parks"));
+const parkRoutes_1 = __importDefault(require("./routes/parkRoutes"));
 const app = (0, express_1.default)();
 // create rate limiters
 const generalLimiter = (0, express_rate_limit_1.default)({
@@ -28,7 +28,7 @@ mongoose_1.default.connect(dbUri)
     .then(() => { console.log('Connected to MongoDB'); })
     .catch((err) => { console.log(`Connection Failed: ${err.message}`); });
 // url dispatching
-app.use('/api/v1/parks', parks_1.default);
+app.use('/api/v1/parks', parkRoutes_1.default);
 // swagger api doc config
 const options = {
     definition: {

@@ -6,7 +6,7 @@ import mongoose from 'mongoose';  // mongodb access lib
 import rateLimit from 'express-rate-limit';
 
 // controllers
-import parks from './controllers/parks';
+import parkRouter from './routes/parkRoutes';
 
 const app: Application = express();
 
@@ -31,7 +31,7 @@ mongoose.connect(dbUri)
 .catch((err: Error) => { console.log(`Connection Failed: ${err.message}`) });
 
 // url dispatching
-app.use('/api/v1/parks', parks);
+app.use('/api/v1/parks', parkRouter);
 
 // swagger api doc config
 const options = {
