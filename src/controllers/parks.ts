@@ -58,7 +58,13 @@ export const getPark = async (req: Request, res: Response) => {
  * @swagger
  * /api/v1/parks/{id}:
  *   get:
- *     summary: Retrieve one parks
+ *     summary: Retrieve one park by id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
  *     responses:
  *       200:
  *         description: A single resource from Parks
