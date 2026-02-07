@@ -142,11 +142,4 @@ const deletePark = async (req, res) => {
 };
 exports.deletePark = deletePark;
 // make controller public
-// bind routes to controller functions
-router.post('/', exports.createPark);
-router.get('/', exports.getPark);
-router.get('/:id', exports.getParkById);
-router.put('/:id', exports.updatePark);
-router.delete('/:id', exports.deletePark);
-// make controller public
 exports.default = router;

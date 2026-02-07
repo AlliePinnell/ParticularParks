@@ -145,14 +145,5 @@ export const deletePark = async (req: Request, res: Response) => {
      return res.status(204).json({ 'msg': 'Park Deleted' }); // 204: No Content
 };
 
-
-// make controller public
-// bind routes to controller functions
-router.post('/', createPark);
-router.get('/', getPark);
-router.get('/:id', getParkById);
-router.put('/:id', updatePark);
-router.delete('/:id', deletePark);
-
 // make controller public
 export default router;
