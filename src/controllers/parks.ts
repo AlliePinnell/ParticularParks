@@ -33,7 +33,7 @@ export const createPark = async (req: Request, res: Response) => {
     await Park.create(req.body); // add new park to db from request body via Park model
 
     return res.status(201).json(); // 201: resource created
-});
+};
 
 /**
  * @swagger
@@ -52,7 +52,7 @@ export const getPark = async (req: Request, res: Response) => {
     }
 
     return res.status(200).json(parks);
-});
+};
 
 /**
  * @swagger
@@ -71,7 +71,7 @@ export const getParkById = async (req: Request, res: Response) => {
     }
 
     return res.status(200).json(park);
-});
+};
 
 /**
  * @swagger
@@ -109,7 +109,7 @@ export const updatePark = async (req: Request, res: Response) => {
 
     await Park.findByIdAndUpdate(req.params.id, req.body);
     return res.status(204).json({ 'msg': 'Park Updated' }); // 204: No Content
-});
+};
 
 /**
  * @swagger
@@ -136,7 +136,7 @@ export const deletePark = async (req: Request, res: Response) => {
 
     await Park.findByIdAndDelete(req.params.id);
      return res.status(204).json({ 'msg': 'Park Deleted' }); // 204: No Content
-})
+};
 
 
 // make controller public
