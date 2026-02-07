@@ -65,7 +65,6 @@ exports.getPark = getPark;
  *         schema:
  *           type: integer
  *         required: true
- *        description: Numeric id of the park to retrieve
  *     responses:
  *       200:
  *         description: A single resource from Parks
