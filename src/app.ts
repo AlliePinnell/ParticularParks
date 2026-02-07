@@ -3,14 +3,25 @@ import bodyParser from 'body-parser'; // accept json body in POST / PUT requests
 import swaggerJsDoc from 'swagger-jsdoc'; // api doc generator
 import swaggerUi from 'swagger-ui-express';
 import mongoose from 'mongoose';  // mongodb access lib
+import rateLimit from 'express-rate-limit';
 
 // controllers
 import parks from './controllers/parks';
 
 const app: Application = express();
 
+// create rate limiters
+const generalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 30 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: 'Too many requests for Particular Parks API, please try again later.',
+});
+
 // configure app globally to parse http request bodies as json
 app.use(bodyParser.json());
+
+// apply general rate limiter to all routes
+app.use(generalLimiter);
 
 // db connection
 const dbUri = process.env.DB!;

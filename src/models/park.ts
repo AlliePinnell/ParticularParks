@@ -5,7 +5,7 @@ interface IPark {
     type: string;
     address: string;
     size: number;
-    amenities: string;
+    amenities: string[];
 }
 
 const ParkSchema = new Schema<IPark>({
@@ -25,7 +25,7 @@ const ParkSchema = new Schema<IPark>({
         type: Number
     },
     amenities: {
-        type: String
+        type: [String]
     }
 });
 
