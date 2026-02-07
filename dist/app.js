@@ -8,11 +8,20 @@ const body_parser_1 = __importDefault(require("body-parser")); // accept json bo
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc")); // api doc generator
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const mongoose_1 = __importDefault(require("mongoose")); // mongodb access lib
+const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 // controllers
 const parks_1 = __importDefault(require("./controllers/parks"));
 const app = (0, express_1.default)();
+// create rate limiters
+const generalLimiter = (0, express_rate_limit_1.default)({
+    windowMs: 15 * 60 * 1000, // 30 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: 'Too many requests for Particular Parks API, please try again later.',
+});
 // configure app globally to parse http request bodies as json
 app.use(body_parser_1.default.json());
+// apply general rate limiter to all routes
+app.use(generalLimiter);
 // db connection
 const dbUri = process.env.DB;
 mongoose_1.default.connect(dbUri)

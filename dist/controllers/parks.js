@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deletePark = exports.updatePark = exports.getParkById = exports.getPark = exports.createPark = void 0;
 const express_1 = __importDefault(require("express"));
 const park_1 = __importDefault(require("../models/park"));
 const router = express_1.default.Router();
@@ -28,13 +29,14 @@ const router = express_1.default.Router();
  *       400:
  *         description: Bad request
  */
-router.post('/', async (req, res) => {
+const createPark = async (req, res) => {
     if (!req.body) {
         return res.status(400).json({ 'err': 'Invalid Request Body' }); // 400: Bad Request
     }
     await park_1.default.create(req.body); // add new park to db from request body via Park model
     return res.status(201).json(); // 201: resource created
-});
+};
+exports.createPark = createPark;
 /**
  * @swagger
  * /api/v1/parks:
@@ -44,29 +46,38 @@ router.post('/', async (req, res) => {
  *       200:
  *         description: A list of parks
  */
-router.get('/', async (req, res) => {
+const getPark = async (req, res) => {
     const parks = await park_1.default.find();
     if (!parks || parks.length === 0) {
         return res.status(404).json({ message: 'No parks found' });
     }
     return res.status(200).json(parks);
-});
+};
+exports.getPark = getPark;
 /**
  * @swagger
  * /api/v1/parks/{id}:
  *   get:
- *     summary: Retrieve one parks
+ *     summary: Retrieve one park by id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *        description: Numeric id of the park to retrieve
  *     responses:
  *       200:
  *         description: A single resource from Parks
  */
-router.get('/:id', async (req, res) => {
+const getParkById = async (req, res) => {
     const park = await park_1.default.findById(req.params.id);
     if (!park) {
         return res.status(404).json({ message: 'Park not found' });
     }
     return res.status(200).json(park);
-});
+};
+exports.getParkById = getParkById;
 /**
  * @swagger
  * /api/v1/parks/{id}:
@@ -96,16 +107,17 @@ router.get('/:id', async (req, res) => {
  *      400:
  *        description: Bad Request - Id parameter missing
  */
-router.put('/:id', async (req, res) => {
+const updatePark = async (req, res) => {
     if (!req.params.id) {
         return res.status(400).json({ 'error': 'Bad Request - Id parameter missing' }); // validate we have an id value
     }
     await park_1.default.findByIdAndUpdate(req.params.id, req.body);
     return res.status(204).json({ 'msg': 'Park Updated' }); // 204: No Content
-});
+};
+exports.updatePark = updatePark;
 /**
  * @swagger
- * /api/v1/games/{id}:
+ * /api/v1/parks/{id}:
  *  delete:
  *    summary: Remove a park by id
  *    parameters:
@@ -121,12 +133,20 @@ router.put('/:id', async (req, res) => {
  *      400:
  *        description: Bad Request - Id parameter missing
  */
-router.delete('/:id', async (req, res) => {
+const deletePark = async (req, res) => {
     if (!req.params.id) {
         return res.status(400).json({ 'error': 'Bad Request - Id parameter missing' }); // validate we have an id value
     }
     await park_1.default.findByIdAndDelete(req.params.id);
     return res.status(204).json({ 'msg': 'Park Deleted' }); // 204: No Content
-});
+};
+exports.deletePark = deletePark;
+// make controller public
+// bind routes to controller functions
+router.post('/', exports.createPark);
+router.get('/', exports.getPark);
+router.get('/:id', exports.getParkById);
+router.put('/:id', exports.updatePark);
+router.delete('/:id', exports.deletePark);
 // make controller public
 exports.default = router;

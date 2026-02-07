@@ -51,7 +51,7 @@ const ParkSchema = new mongoose_1.Schema({
         type: Number
     },
     amenities: {
-        type: String
+        type: [String]
     }
 });
 // create Model def and make public

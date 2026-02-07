@@ -147,4 +147,12 @@ export const deletePark = async (req: Request, res: Response) => {
 
 
 // make controller public
+// bind routes to controller functions
+router.post('/', createPark);
+router.get('/', getPark);
+router.get('/:id', getParkById);
+router.put('/:id', updatePark);
+router.delete('/:id', deletePark);
+
+// make controller public
 export default router;
