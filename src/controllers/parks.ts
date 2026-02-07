@@ -25,7 +25,7 @@ const router: Router = express.Router();
  *       400:
  *         description: Bad request
  */
-router.post('/', async (req: Request, res: Response) => {
+export const createPark = async (req: Request, res: Response) => {
     if (!req.body) {
         return res.status(400).json({ 'err': 'Invalid Request Body' }); // 400: Bad Request
     }
@@ -44,7 +44,7 @@ router.post('/', async (req: Request, res: Response) => {
  *       200:
  *         description: A list of parks
  */
-router.get('/', async (req: Request, res: Response) => {
+export const getPark = async (req: Request, res: Response) => {
     const parks = await Park.find();
 
     if (!parks || parks.length === 0) {
@@ -63,7 +63,7 @@ router.get('/', async (req: Request, res: Response) => {
  *       200:
  *         description: A single resource from Parks
  */
-router.get('/:id', async (req: Request, res: Response) => {
+export const getParkById = async (req: Request, res: Response) => {
     const park = await Park.findById(req.params.id);
 
     if (!park) {
@@ -102,7 +102,7 @@ router.get('/:id', async (req: Request, res: Response) => {
  *      400:
  *        description: Bad Request - Id parameter missing
  */
-router.put('/:id', async (req: Request, res: Response) => {
+export const updatePark = async (req: Request, res: Response) => {
     if (!req.params.id) {
         return res.status(400).json({ 'error': 'Bad Request - Id parameter missing' }); // validate we have an id value
     }
@@ -113,7 +113,7 @@ router.put('/:id', async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /api/v1/games/{id}:
+ * /api/v1/parks/{id}:
  *  delete:
  *    summary: Remove a park by id
  *    parameters:
@@ -129,7 +129,7 @@ router.put('/:id', async (req: Request, res: Response) => {
  *      400:
  *        description: Bad Request - Id parameter missing
  */
-router.delete('/:id', async (req: Request, res: Response) => {
+export const deletePark = async (req: Request, res: Response) => {
     if (!req.params.id) {
         return res.status(400).json({ 'error': 'Bad Request - Id parameter missing' }); // validate we have an id value
     }
